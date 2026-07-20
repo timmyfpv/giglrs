@@ -1444,7 +1444,7 @@ void setup()
     #else
     if (GPIO_PIN_SCK != UNDEF_PIN)
     {
-      init_success = Radio.Begin(FHSSgetMinimumFreq(), FHSSgetMaximumFreq());
+      init_success = beginRadioWithRetries(FHSSgetMinimumFreq(), FHSSgetMaximumFreq());
     }
     else
     {

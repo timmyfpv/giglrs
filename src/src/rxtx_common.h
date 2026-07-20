@@ -13,5 +13,10 @@
 #include "POWERMGNT.h"
 #include "deferred.h"
 
+#include <stdint.h>
+
 void setupTargetCommon();
+#if !defined(UNIT_TEST)
+bool beginRadioWithRetries(uint32_t minimumFrequency, uint32_t maximumFrequency);
+#endif
 void checkRebootTime(unsigned long now);

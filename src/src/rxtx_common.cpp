@@ -8,6 +8,14 @@
 
 static const int maxDeferredFunctions = 3;
 
+#ifndef GIGLRS_RADIO_BEGIN_ATTEMPTS
+#define GIGLRS_RADIO_BEGIN_ATTEMPTS 5
+#endif
+
+#ifndef GIGLRS_RADIO_BEGIN_RETRY_DELAY_MS
+#define GIGLRS_RADIO_BEGIN_RETRY_DELAY_MS 100
+#endif
+
 struct deferred_t {
     unsigned long started;
     unsigned long timeout;
@@ -66,6 +74,31 @@ void setupTargetCommon()
 {
     setupWire();
 }
+
+#if !defined(UNIT_TEST)
+bool beginRadioWithRetries(uint32_t minimumFrequency, uint32_t maximumFrequency)
+{
+    for (uint8_t attempt = 1; attempt <= GIGLRS_RADIO_BEGIN_ATTEMPTS; attempt++)
+    {
+        if (Radio.Begin(minimumFrequency, maximumFrequency))
+        {
+            if (attempt > 1)
+            {
+                DBGLN("RF chipset detected after %u attempts", attempt);
+            }
+            return true;
+        }
+
+        DBGLN("RF chipset detect attempt %u/%u failed", attempt, GIGLRS_RADIO_BEGIN_ATTEMPTS);
+        if (attempt < GIGLRS_RADIO_BEGIN_ATTEMPTS)
+        {
+            delay(GIGLRS_RADIO_BEGIN_RETRY_DELAY_MS);
+        }
+    }
+
+    return false;
+}
+#endif
 
 void deferExecutionMicros(unsigned long us, std::function<void()> f)
 {
