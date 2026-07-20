@@ -29,7 +29,7 @@ Hardware target metadata is stored separately in:
 
 https://github.com/timmyfpv/giglrs-targets
 
-During local ESP builds, the metadata repo is cloned into `src/hardware` when that folder is missing.
+During local ESP builds, the metadata repo is cloned into `src/hardware` when that folder is missing. The current GIGLRS hardware database intentionally exposes only `giglrs.rx_2400.aio`, a GIGLRS AIO RX target based on the HDZero 2.4GHz AIO RX target.
 
 ## Build And Test
 
@@ -37,8 +37,7 @@ From `src`:
 
 ```sh
 pio test -e native
-PLATFORMIO_BUILD_FLAGS="-DRegulatory_Domain_ISM_2400" pio run -e Unified_ESP32_2400_RX_via_UART
-PLATFORMIO_BUILD_FLAGS="-DRegulatory_Domain_ISM_2400" pio run -e Unified_ESP32_2400_TX_via_UART
+PLATFORMIO_BUILD_FLAGS="-DRegulatory_Domain_ISM_2400" pio run -e Unified_ESP32C3_2400_RX_via_UART
 ```
 
 ## Upstream
