@@ -23,7 +23,7 @@ Both values can be overridden with build flags if a target needs different timin
 
 ## Target Handling
 
-PlatformIO build environments live in `src/targets`.
+PlatformIO build environments live in `src/targets`. GIGLRS keeps only the ESP32-C3 2.4 GHz RX environments needed by the supported AIO target.
 
 Hardware target metadata is stored separately in:
 
